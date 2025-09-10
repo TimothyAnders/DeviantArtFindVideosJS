@@ -1,9 +1,7 @@
 var results = [];
-// '_1fFSj'
-// '_1SRCx'
-let classNameWith = '_1SRCx';
+let classNameWithArray = ['_1fFSj', '_1SRCx'];
 
-// results.sort((a, b) => compareTimesByMinutes(a.elementTime, b.elementTime) > 0);
+// results.sort((a, b) => compareTimesByMinutes(a.elementTime, b.elementTime));
 
 function compareTimesByMinutes(time1, time2) {
   const totalMinutes1 = getElementTimeAsMinutes(time1);
@@ -27,39 +25,36 @@ function getElementTimeAsMinutes(time) {
    return (hours1 * 60) + minutes1;
 }
 
-var interval = setInterval(function(){
-for (let elementX of document.getElementsByClassName(classNameWith)) {
-	if (!elementX.parentElement.children[2] || !elementX.parentElement.children[2].children[1] || !elementX.parentElement.children[2].children[1].children[0] || !elementX.parentElement.children[2].children[1].children[0].children[0]
-	||  !elementX.parentElement.children[2].children[1].children[0].children[0].children[1].children[0]) {
-		continue;
-	}
-	var elementLink = elementX.href;
-	var elementTime = elementX.parentElement.children[2].children[1].children[0].children[0].children[1].children[0].children[0].innerHTML; 
-	
-	var newResult = {elementLink: elementLink, elementTime: elementTime};
-	var index = results.findIndex((item) => item.elementLink === elementLink)
-	
-	if (index == -1) {
-		results.push(newResult);
-	}
-}
-	window.scrollTo(0, document.body.scrollHeight);
-}, 50);
-
-/*
-var interval = setInterval(function(){
-	for (let elementX of document.getElementsByClassName(classNameWith)) {
-		var elementLink = elementX.parentElement.parentElement.parentElement.parentElement.children[0].href;
-		var elementTime = elementX.innerHTML; 
-		
-		var newResult = {elementLink: elementLink, elementTime: elementTime};
-		var index = results.findIndex((item) => item.elementLink === elementLink)
-		
-		if (index == -1) {
-			results.push(newResult);
+function findElementsWithTime() {
+	for (let classNameWith of classNameWithArray) {
+		for (let elementX of document.getElementsByClassName(classNameWith)) {
+			var elementLink;
+			var elementTime;
+			
+			if (!elementX.parentElement.children[2] || !elementX.parentElement.children[2].children[1] || !elementX.parentElement.children[2].children[1].children[0] || !elementX.parentElement.children[2].children[1].children[0].children[0]
+				||  !elementX.parentElement.children[2].children[1].children[0].children[0].children[1].children[0]) {
+				if (!elementX.innerHTML.includes(':')) {
+					continue;
+				} else {
+					elementTime = elementX.innerHTML;
+					elementLink = elementX.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.children[1].href;
+				}
+			} else {
+				elementLink = elementX.href;
+				elementTime = elementX.parentElement.children[2].children[1].children[0].children[0].children[1].children[0].children[0].innerHTML; 
+			}
+			
+			var newResult = {elementLink: elementLink, elementTime: elementTime};
+			var index = results.findIndex((item) => item.elementLink === elementLink)
+			
+			if (index == -1) {
+				results.push(newResult);
+			}
 		}
 	}
+}
+
+var interval = setInterval(function(){
+	findElementsWithTime();
 	window.scrollTo(0, document.body.scrollHeight);
 }, 50);
-
-*/
