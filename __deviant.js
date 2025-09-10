@@ -6,20 +6,25 @@ let classNameWith = '_1SRCx';
 // results.sort((a, b) => compareTimesByMinutes(a.elementTime, b.elementTime) > 0);
 
 function compareTimesByMinutes(time1, time2) {
-  // Assuming time strings are in "HH:MM" format
-  const [hours1, minutes1] = time1.split(':').map(Number);
-  const [hours2, minutes2] = time2.split(':').map(Number);
+  const totalMinutes1 = getElementTimeAsMinutes(time1);
+  const totalMinutes2 = getElementTimeAsMinutes(time2);
 
-  const totalMinutes1 = (hours1 * 60) + minutes1;
-  const totalMinutes2 = (hours2 * 60) + minutes2;
+  return totalMinutes1 - totalMinutes2;
+}
 
-  if (totalMinutes1 > totalMinutes2) {
-    return 1; // time1 is later
-  } else if (totalMinutes1 < totalMinutes2) {
-    return -1; // time1 is earlier
-  } else {
-    return 0; // times are equal
+function getElementTimeAsMinutes(time) {
+  if (time.elementTime) {
+	  time = time.elementTime;
   }
+  
+  if (time == "" || time.elementLink) {
+	  time = "0:00";
+  }
+  
+  // Assuming time strings are in "HH:MM" format
+  const [hours1, minutes1] = time.split(':').map(Number);
+
+   return (hours1 * 60) + minutes1;
 }
 
 var interval = setInterval(function(){
@@ -56,4 +61,5 @@ var interval = setInterval(function(){
 	}
 	window.scrollTo(0, document.body.scrollHeight);
 }, 50);
+
 */
