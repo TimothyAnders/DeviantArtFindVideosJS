@@ -1,5 +1,5 @@
 var results = [];
-let classNameWithArray = ['_1fFSj', '_1SRCx'];
+let classNameWithArray = ['_1fFSj', '_1SRCx', 'gAZG71'];
 
 // results.sort((a, b) => compareTimesByMinutes(a.elementTime, b.elementTime));
 
@@ -58,3 +58,4 @@ var interval = setInterval(function(){
 	findElementsWithTime();
 	window.scrollTo(0, document.body.scrollHeight);
 }, 50);
+
